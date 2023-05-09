@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "paddle/fluid/operators/test_leaky_relu_grad_grad_functor.h"
+#include "test/cpp/fluid/test_leaky_relu_grad_grad_functor.h"
 
 namespace paddle {
 namespace operators {

@@ -1,4 +1,4 @@
-// Copyright (c) 2022 PaddlePaddle Authors. All Rights Reserved.
+// Copyright (c) 2019 PaddlePaddle Authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,28 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma once
-#include <vector>
-
-#include "paddle/fluid/framework/convert_utils.h"
-#include "paddle/fluid/framework/ir/fuse_pass_base.h"
-#include "paddle/fluid/framework/ir/graph_pattern_detector.h"
-#include "paddle/fluid/platform/enforce.h"
+#include "test/cpp/fluid/test_leaky_relu_grad_grad_functor.h"
 
 namespace paddle {
-namespace framework {
-namespace ir {
+namespace operators {
 
-class Graph;
+TEST(leaky_relu_grad_grad, test_cpu) {
+  ASSERT_TRUE(
+      TestLeakyReluGradGradMain<float>({32, 64}, platform::CPUPlace(), 0.02));
+}
 
-class DeleteFillConstantOpPass : public FusePassBase {
- protected:
-  void ApplyImpl(ir::Graph* graph) const override;
+TEST(leaky_relu_grad_grad, test_cpu_zero_alpha) {
+  ASSERT_TRUE(
+      TestLeakyReluGradGradMain<float>({32, 64}, platform::CPUPlace(), 0.0));
+}
 
- private:
-  virtual ~DeleteFillConstantOpPass() = default;
-};
-
-}  // namespace ir
-}  // namespace framework
+}  // namespace operators
 }  // namespace paddle
